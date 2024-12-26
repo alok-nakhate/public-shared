@@ -1,32 +1,35 @@
-//receiveDialerInfo();
+
 setInterval(receiveDialerInfo, 3000);
+
 function receiveDialerInfo() {
-    var isNewAcc = getCookie("isNewAcc");
-    var agreementNo = getCookie("accountNum");
-	var isNewCust = getCookie("isNewCust");
-    var customerNo = getCookie("customerNum");
-    if (agreementNo && isNewAcc && isNewAcc == "Y" && agreementNo !=  getCookie("dialerAgrConn") && getCookie("isAgrClipSearchDone") != 'Y') {
+    let isNewAcc = getCookie("isNewAcc");
+    let agreementNo = getCookie("accountNum");
+    let isNewCust = getCookie("isNewCust");
+    let customerNo = getCookie("customerNum");
+
+    if (agreementNo && isNewAcc && isNewAcc == "Y" && agreementNo != getCookie("dialerAgrConn") && getCookie("isAgrClipSearchDone") != 'Y') {
         setCookie("isAgrClipSearchDone", "Y");
         setCookie("dialerAgrConn", agreementNo);
-		setCookie("isCustClipSearchDone", "N");
+        setCookie("isCustClipSearchDone", "N");
         setCookie("dialerCustConn", "");
 
-        try{
-            setClipsearchValue(agreementNo,'HF92');} catch(e){}
-            searchValueInClipSearch(agreementNo,'HF92');
+        try {
+            setClipsearchValue(agreementNo, 'HF92');
+        } catch (e) { }
+        searchValueInClipSearch(agreementNo, 'HF92');
     }
-	
-	if (customerNo && isNewCust && isNewCust == "Y" && customerNo !=  getCookie("dialerCustConn") && getCookie("isCustClipSearchDone") != 'Y') {
+
+    if (customerNo && isNewCust && isNewCust == "Y" && customerNo != getCookie("dialerCustConn") && getCookie("isCustClipSearchDone") != 'Y') {
         setCookie("isCustClipSearchDone", "Y");
         setCookie("dialerCustConn", customerNo);
-		setCookie("isAgrClipSearchDone", "N");
+        setCookie("isAgrClipSearchDone", "N");
         setCookie("dialerAgrConn", "");
-        try{
-            setClipsearchValue(customerNo,'HF104');} catch(e){}
-            searchValueInClipSearch(customerNo,'HF104');
+        try {
+            setClipsearchValue(customerNo, 'HF104');
+        } catch (e) { }
+        searchValueInClipSearch(customerNo, 'HF104');
     }
-    //setTimeout(receiveDialerInfo, 1500);
-	return null;
+    return;
 }
 
 function setCookie(cname, cvalue) {
@@ -34,16 +37,15 @@ function setCookie(cname, cvalue) {
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
+    let name = cname + "=";
+    let ca = decodeURIComponent(document.cookie).split(';');
+
+    for (let i = 0; i < ca.length; i++) {
+        while (ca[i].charAt(0) == ' ') {
+            ca[i] = ca[i].substring(1);
         }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+        if (ca[i].indexOf(name) == 0) {
+            return ca[i].substring(name.length, ca[i].length);
         }
     }
     return "";

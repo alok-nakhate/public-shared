@@ -1,44 +1,33 @@
-function onScreenLoad(){
-	var SZ_ORG_ID='001';
-	debugger;
-	var custno=getValue("DESIGNER_COLAGRMNT.COLAGRMNT_CSTMRSQN");
-	var query= "OrgCode="+SZ_ORG_ID+"&custno="+custno;
-	cst = fetchData("/" + GlobalHelper.menuContext + "/secure/BRMS.do?_pn=FetchTotalExposure&_en=onLoad", query);
-            console.log("cst =", cst);
-            obj = eval("cst = " + cst);
-	
-	if(obj.fetchgrandtotal.rows[0] != ''){
-		var trows_tmp = obj.fetchgrandtotal.totalRows;
-             clearGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
-			 let szfOSAmt = obj.fetchgrandtotal.rows[0]['FOSAMT'];
-			 let fOSAmt=parseFloat(szfOSAmt).toFixed(2);
-			 
-			 let szOVDAmt = obj.fetchgrandtotal.rows[0]['FFIELD3'];
-			 let OVDAmt=parseFloat(szOVDAmt).toFixed(2);
-			 
-			 let szOVLAmt = obj.fetchgrandtotal.rows[0]['FOVERLIMITAMT'];
-			 let OVLAmt=parseFloat(szOVLAmt).toFixed(2);
-			 
+function onScreenLoad() {
 
-        for(var i =0; i < trows_tmp; i++) {     
-        	
-            addEmptyRowInGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
-			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FSMT_3NHG5TY[0]", fOSAmt);
-			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FFLD3_3XBFR53[0]", OVDAmt);
-			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FVRLMTMT_31O6P1D[0]", OVLAmt);
+	let query = "OrgCode=001&custno=" + getValue("DESIGNER_COLAGRMNT.COLAGRMNT_CSTMRSQN");
+	let cst = fetchData("/" + GlobalHelper.menuContext + "/secure/BRMS.do?_pn=FetchTotalExposure&_en=onLoad", query);
+	let obj = eval("cst = " + cst);
+
+	if (obj.fetchgrandtotal.rows[0] != '') {
+
+		clearGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
+
+		for (let i = 0; i < obj.fetchgrandtotal.totalRows; i++) {
+
+			addEmptyRowInGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
+			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FSMT_3NHG5TY[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FOSAMT']).toFixed(2));
+			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FFLD3_3XBFR53[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FFIELD3']).toFixed(2));
+			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FVRLMTMT_31O6P1D[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FOVERLIMITAMT']).toFixed(2));
 			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.DDYS_3JWR848[0]", 'Grand Total');
-			
-			
+
 		}
 	}
+
+	cst = null;
+	obj = null;
 }
 
-function ExecutionActivity(){
-	var indexOfGridRow = getIndexOfChangedEditableRow();
-	var indexOfGridRow = indexOfGridRow - 1;
-	var iagreement = getValue("DESIGNER_COLAGRMNT.COL_TOTAL_EXP_DELQ.LGCYGRMNTN_3QOKGL0[" +  indexOfGridRow + "]");
+function ExecutionActivity() {
+
+	let iagreement = getValue("DESIGNER_COLAGRMNT.COL_TOTAL_EXP_DELQ.LGCYGRMNTN_3QOKGL0[" + (getIndexOfChangedEditableRow() - 1) + "]");
 	try {
 		setClipsearchValue(iagreement, 'HF92');
-	} catch (e) {}
+	} catch (e) { }
 	searchValueInClipSearch(iagreement, 'HF92');
 }
