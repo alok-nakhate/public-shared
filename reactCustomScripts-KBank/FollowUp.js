@@ -59,15 +59,13 @@ function onScreenPostSave(str) {
 }
 
 function clearSchedule(xpath, value, props) {
-	let mainJson = GlobalHelper.globlevar['UIScreenLayoutJson'];
 
-	mainJson.names.data[0].name.screendata.forEach(element => {
+	GlobalHelper.globlevar['UIScreenLayoutJson'].names.data[0].name.screendata.forEach(element => {
 		if (element.sessionID == '467e48dccf6448f6ba77f1cf32d71645') {
 			element.formData[0]['467e48dccf6448f6ba77f1cf32d71645'].data.DataSource = [];
 		}
 	});
 
-	mainJson = null;
 }
 
 function GenrateShedule(buttonId, props) {
@@ -154,6 +152,7 @@ function GenrateShedule(buttonId, props) {
 				promiseDT = "0" + curDate.getDate();
 			else
 				promiseDT = curDate.getDate();
+
 			if (curDate.getMonth() < 9)
 				promiseMth = "0" + (curDate.getMonth() + 1);
 			else
@@ -248,9 +247,6 @@ function PopulateLinkDetails() {
 			displayHTMLContents('Policy Details', content);
 		}
 	}
-	else {
-
-	}
 }
 function notes() {
 
@@ -307,8 +303,4 @@ function PasteClipSrchValue() {
 	try {
 		setClipsearchValue(getValue('DESIGNER_COLAGRMNT.LGCYGRMNTN')[0], 'HF92');
 	} catch (e) { }
-}
-
-function notesvalidation() {
-
 }

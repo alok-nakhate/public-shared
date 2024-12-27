@@ -28,7 +28,7 @@ function onScreenPreSave() {
 
     } catch (e) {
         console.error(e);
-    } finally { }
+    }
 
 }
 function FetchNotes() {
@@ -44,8 +44,7 @@ function FetchNotes() {
             cst = fetchData("/" + GlobalHelper.menuContext + "/secure/BRMS.do?_pn=FetchMemoNotes&_en=onLoadCust", query);
             obj = eval("cst = " + cst);
             setValue("DESIGNER_COLAGRMNT.DESIGNER_COLCSTMRNTS_DTLS.NTS", obj.fetch_CustomerStickyNotes.rows[0]['SZSTICKYNOTE']);
-        }
-        if (radiovalue == 'A') {
+        } else if (radiovalue == 'A') {
             cst = fetchData("/" + GlobalHelper.menuContext + "/secure/BRMS.do?_pn=FetchMemoNotes&_en=onLoadAcc", query);
             obj = eval("cst = " + cst);
             setValue("DESIGNER_COLAGRMNT.DESIGNER_COLCSTMRNTS_DTLS.NTS", obj.fetch_AccountStickyNotes.rows[0]['SZSTICKYNOTE']);
@@ -75,8 +74,7 @@ function FetchCurrentNotes() {
             if (NotesValue != undefined || NotesValue != null || NotesValue != "") {
                 setValue("DESIGNER_COLAGRMNT.DESIGNER_COLCSTMRNTS_DTLS.NTS", obj.fetch_CustomerStickyNotes.rows[0]['SZSTICKYNOTE'] + " " + NotesValue);
             }
-        }
-        if (radiovalue == 'A') {
+        } else if (radiovalue == 'A') {
             cst = fetchData("/" + GlobalHelper.menuContext + "/secure/BRMS.do?_pn=FetchMemoNotes&_en=onLoadAcc", query);
             obj = eval("cst = " + cst);
             setValue("DESIGNER_COLAGRMNT.DESIGNER_COLCSTMRNTS_DTLS.NTS", obj.fetch_AccountStickyNotes.rows[0]['SZSTICKYNOTE']);
@@ -103,4 +101,5 @@ function notes() {
         removeCustomeErrormessages('DESIGNER_COLAGRMNT.DESIGNER_COLCSTMRNTS_DTLS.NTS', ['"/ and \\ "characters are not allowed in Notes']);
     }
 
+    notes = null;
 }

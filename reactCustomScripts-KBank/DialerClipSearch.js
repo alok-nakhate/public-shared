@@ -48,5 +48,6 @@ function getCookie(cname) {
             return ca[i].substring(name.length, ca[i].length);
         }
     }
+    ca = null;
     return "";
 }

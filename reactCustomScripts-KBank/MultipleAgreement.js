@@ -8,13 +8,13 @@ function onScreenLoad() {
 	if (obj.fetchgrandtotal.rows[0] != '') {
 		clearGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
 
-		obj.fetchgrandtotal.forEach(element => {
+		// obj.fetchgrandtotal.forEach(element => {
 			addEmptyRowInGrid("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL");
 			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FSMT_3NHG5TY[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FOSAMT']).toFixed(2));
 			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FFLD3_3XBFR53[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FFIELD3']).toFixed(2));
 			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.FVRLMTMT_31O6P1D[0]", parseFloat(obj.fetchgrandtotal.rows[0]['FOVERLIMITAMT']).toFixed(2));
 			setValue("DESIGNER_COLAGRMNT.COL_GRAND_TOTAL.DDYS_3JWR848[0]", 'Grand Total');
-		});
+		// });
 
 	}
 
