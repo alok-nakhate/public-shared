@@ -120,7 +120,7 @@ var doubleDialerFlag = false;
 let optionsArrayOfDialer = [];
 let actionOptionArray = [];
 var checkOverviewDialerFlag = false;
-class MainLayout extends React.Component {
+class MainLayout extends React.PureComponent {
 	constructor() {
 		super();
 		this.state = {
@@ -544,11 +544,33 @@ class MainLayout extends React.Component {
 		return x;
 	}
 
+	updateDimensions(layoutWidthTest) {
+        if(GlobalHelper.globlevar['sectionLinkclicked'] != true){
+        if (GlobalHelper.globlevar.toggleClicked === undefined) {
+            GlobalHelper.globlevar.toggleClicked = true;
+        }
+        let update_height = window.innerHeight;
+        //let update_width = (window.innerWidth-142);
+        let update_width = this.state.widths;
+        this.setState({ widths: update_width, layoutHeight: update_height });
+        }
+    }
+
 	componentDidMount() {
 		$($($($("[class~=myCustomModalInfo]").parent()).parent()).parent()).css('cssText','display: inline-block; position:relative; right:-525px');
+		this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+        window.addEventListener("resize", this.expand.bind(this));
+        window.addEventListener("resize", this.compress.bind(this));
 	}
 
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	// Perform custom comparison to avoid re-render
+	// 	return nextProps.outnames.data[0].name.screendata !== this.props.outnames.data[0].name.screendata;
+	// }
+
 	componentWillUnmount() {
+		window.removeEventListener("resize", this.updateDimensions.bind(this));
 		window.removeEventListener('paste', function (event){});
 		optionsArrayOfDialer = [];
 		actionOptionArray = [];
@@ -1496,7 +1518,7 @@ class MainLayout extends React.Component {
 														<Route path="/" component={state => <GridWorkList refreshQB={this.refreshQB} widths={this.state.widths} themeCode={this.state.themeName}/>} returnToMenuId={this.props.outnames.returnToMenuId}/>
 														<Route path={GlobalHelper.globlevar.contextpath + "MainLayout/index"} component={LoginForm} />
 
-														<Route path="/*" render={() => <Redirect to={pathname} />} />
+														{/* <Route path="/*" render={() => <Redirect to={pathname} />} /> */}
 													</Switch>
 													</Suspense>
 												</Provider>
@@ -2253,7 +2275,7 @@ null
 															/>
 															<Route path="/" component={state => <GridWorkList refreshQB={this.refreshQB} widths={this.state.widths} themeCode={this.state.themeName}/>} returnToMenuId={this.props.outnames.returnToMenuId}/>
 															<Route path={GlobalHelper.globlevar.contextpath + "MainLayout/index"} component={LoginForm} />
-															<Route path="/*" render={() => <Redirect to={pathname} />} />
+															{/* <Route path="/*" render={() => <Redirect to={pathname} />} /> */}
 														</Switch>
 														</Suspense>
 													</Provider>
@@ -2549,7 +2571,7 @@ null
 															<Route path="/" component={state => <GridWorkList refreshQB={this.refreshQB} widths={this.state.widths} themeCode={this.state.themeName}/>} returnToMenuId={this.props.outnames.returnToMenuId}/>
 															<Route path={GlobalHelper.globlevar.contextpath + "MainLayout/index"} component={LoginForm} />
 
-															<Route path="/*" render={() => <Redirect to={pathname} />} />
+															{/* <Route path="/*" render={() => <Redirect to={pathname} />} /> */}
 														</Switch>
 														</Suspense>
 													</Provider>
@@ -2919,8 +2941,6 @@ function mapStateToProps(state, ownProps) {
 		outnames: state.names
 	};
 }
-
-
 
 function mapDispatchToProps(dispatch) {
 	Log4r.log("mapDispatchToProps..action...MainLayout....", action);

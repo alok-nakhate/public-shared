@@ -12,7 +12,7 @@ function updateCookies() {
     });
 }
 
-setInterval(() => {
+const timer = setInterval(() => {
     // Update cookies object to get the latest values
     updateCookies();
 
